@@ -13,6 +13,9 @@ from .models import (
     Candidato,
     SelfTextRequest,
     EvaluateSelfRequest,
+    Vaga,
+    JobTextRequest,
+    EvaluateTextsRequest,
 )
 from .services.ollama_client import generate_json, OllamaError
 from .services.pdf_reader import extract_text_from_pdf_bytes
@@ -213,4 +216,56 @@ def evaluate_self(req: EvaluateSelfRequest):
     cand = extract_self(SelfTextRequest(text=req.self_text, use_model=req.use_model))
     # Avalia candidato
     eval_req = EvaluateRequest(vaga=req.vaga, candidatos=[cand], use_model=req.use_model)
+    return evaluate(eval_req)
+
+
+@app.post("/extract-job", response_model=Vaga)
+def extract_job(req: JobTextRequest):
+    """Recebe descrição de vaga em texto livre e retorna Vaga estruturada."""
+    text = (req.text or "").strip()
+    if not text:
+        raise HTTPException(status_code=400, detail="Campo 'text' é obrigatório.")
+
+    prompt = f"""
+Analise a descrição da vaga abaixo e extraia as seguintes informações em JSON:
+{{
+  "titulo": "título da vaga",
+  "empresa": "nome da empresa",
+  "requisitos": ["lista", "de", "requisitos", "técnicos"],
+  "descricao": "resumo breve da vaga"
+}}
+IMPORTANTE: Retorne APENAS o JSON, sem markdown ou explicações.
+
+Descrição da vaga:
+{text}
+"""
+    use_model = req.use_model if req.use_model is not None else USE_MODEL_DEFAULT
+    try:
+        if use_model:
+            data = generate_json(prompt)
+        else:
+            raise OllamaError("IA desativada por solicitação.")
+        titulo = str(data.get("titulo", "")).strip()
+        empresa = str(data.get("empresa", "")).strip() or None
+        requisitos = [str(x) for x in data.get("requisitos", [])]
+        descricao = str(data.get("descricao", "")).strip() or None
+        if not titulo:
+            raise ValueError("Título vazio")
+        return Vaga(titulo=titulo, empresa=empresa, requisitos=requisitos, descricao=descricao)
+    except Exception:
+        # Fallback simples: usa primeiras palavras como título
+        tokens = text.split()
+        titulo_guess = " ".join(tokens[:6])
+        return Vaga(titulo=titulo_guess or "Vaga", empresa=None, requisitos=[], descricao=text[:200])
+
+
+@app.post("/evaluate-texts", response_model=AvaliacoesResponse)
+def evaluate_texts(req: EvaluateTextsRequest):
+    """Recebe job_text + self_text e retorna avaliação completa (extrai vaga e candidato via IA)."""
+    # Extrai vaga
+    vaga = extract_job(JobTextRequest(text=req.job_text, use_model=req.use_model))
+    # Extrai candidato
+    cand = extract_self(SelfTextRequest(text=req.self_text, use_model=req.use_model))
+    # Avalia
+    eval_req = EvaluateRequest(vaga=vaga, candidatos=[cand], use_model=req.use_model)
     return evaluate(eval_req)

@@ -34,3 +34,12 @@ class EvaluateSelfRequest(BaseModel):
     vaga: Vaga
     self_text: str
     use_model: Optional[bool] = True
+
+class JobTextRequest(BaseModel):
+    text: str
+    use_model: Optional[bool] = True
+
+class EvaluateTextsRequest(BaseModel):
+    job_text: str
+    self_text: str
+    use_model: Optional[bool] = True
