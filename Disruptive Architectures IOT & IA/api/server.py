@@ -6,7 +6,14 @@ from fastapi import FastAPI, UploadFile, File, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import ValidationError
 
-from .models import EvaluateRequest, AvaliacoesResponse, Avaliacao, Candidato
+from .models import (
+    EvaluateRequest,
+    AvaliacoesResponse,
+    Avaliacao,
+    Candidato,
+    SelfTextRequest,
+    EvaluateSelfRequest,
+)
 from .services.ollama_client import generate_json, OllamaError
 from .services.pdf_reader import extract_text_from_pdf_bytes
 
@@ -157,3 +164,53 @@ Currículo:
             "cursos": [],
             "observacao": "Fallback sem IA: preencha manualmente habilidades/cursos.",
         }
+
+
+@app.post("/extract-self", response_model=Candidato)
+def extract_self(req: SelfTextRequest):
+    """Recebe um texto de auto-descrição e retorna um Candidato estruturado."""
+    text = (req.text or "").strip()
+    if not text:
+        raise HTTPException(status_code=400, detail="Campo 'text' é obrigatório.")
+
+    prompt = f"""
+Analise a auto-descrição abaixo e extraia as seguintes informações em JSON:
+{{
+  "nome": "nome completo",
+  "habilidades": ["lista", "de", "habilidades"],
+  "experiencia": "resumo breve",
+  "cursos": ["lista", "de", "cursos"]
+}}
+IMPORTANTE: Retorne APENAS o JSON, sem markdown ou explicações.
+
+Auto-descrição:
+{text}
+"""
+    use_model = req.use_model if req.use_model is not None else USE_MODEL_DEFAULT
+    try:
+        if use_model:
+            data = generate_json(prompt)
+        else:
+            raise OllamaError("IA desativada por solicitação.")
+        nome = str(data.get("nome", "")).strip()
+        habilidades = [str(x) for x in data.get("habilidades", [])]
+        experiencia = str(data.get("experiencia", "")).strip()
+        cursos = [str(x) for x in data.get("cursos", [])]
+        if not nome:
+            raise ValueError("Nome vazio")
+        return Candidato(nome=nome, habilidades=habilidades, experiencia=experiencia, cursos=cursos)
+    except Exception:
+        # Fallback simples: usa primeiras palavras como nome e o restante como experiencia
+        tokens = text.split()
+        nome_guess = " ".join(tokens[:4])
+        return Candidato(nome=nome_guess or "Candidato", habilidades=[], experiencia=text[:200], cursos=[])
+
+
+@app.post("/evaluate-self", response_model=AvaliacoesResponse)
+def evaluate_self(req: EvaluateSelfRequest):
+    """Extrai o candidato de uma auto-descrição e avalia contra a vaga."""
+    # Extrai candidato
+    cand = extract_self(SelfTextRequest(text=req.self_text, use_model=req.use_model))
+    # Avalia candidato
+    eval_req = EvaluateRequest(vaga=req.vaga, candidatos=[cand], use_model=req.use_model)
+    return evaluate(eval_req)

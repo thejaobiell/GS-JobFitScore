@@ -25,3 +25,12 @@ class EvaluateRequest(BaseModel):
     vaga: Vaga
     candidatos: List[Candidato]
     use_model: Optional[bool] = True
+
+class SelfTextRequest(BaseModel):
+    text: str
+    use_model: Optional[bool] = True
+
+class EvaluateSelfRequest(BaseModel):
+    vaga: Vaga
+    self_text: str
+    use_model: Optional[bool] = True
