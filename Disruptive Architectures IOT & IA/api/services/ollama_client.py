@@ -13,6 +13,7 @@ DEFAULT_OPTIONS = {
     "num_predict": int(os.getenv("OLLAMA_NUM_PREDICT", "800")),
 }
 
+
 class OllamaError(RuntimeError):
     pass
 
@@ -25,11 +26,13 @@ def _extract_json(text: str) -> str:
         start = cleaned.find("{")
         end = cleaned.rfind("}")
         if start != -1 and end != -1 and end > start:
-            return cleaned[start:end+1]
+            return cleaned[start : end + 1]
     return cleaned
 
 
-def generate_json(prompt: str, model: Optional[str] = None, options: Optional[Dict[str, Any]] = None) -> Dict[str, Any]:
+def generate_json(
+    prompt: str, model: Optional[str] = None, options: Optional[Dict[str, Any]] = None
+) -> Dict[str, Any]:
     """Chama o Ollama e retorna um dict JSON garantido."""
     model_name = model or OLLAMA_MODEL
     payload = {
@@ -49,4 +52,6 @@ def generate_json(prompt: str, model: Optional[str] = None, options: Optional[Di
     except requests.exceptions.RequestException as e:
         raise OllamaError(f"Erro HTTP ao chamar Ollama: {e}") from e
     except json.JSONDecodeError as e:
-        raise OllamaError(f"Falha ao decodificar JSON retornado pelo modelo: {e}\nResposta bruta: {text}") from e
+        raise OllamaError(
+            f"Falha ao decodificar JSON retornado pelo modelo: {e}\nResposta bruta: {text}"
+        ) from e

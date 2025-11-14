@@ -16,10 +16,12 @@ Sistema inteligente que avalia a compatibilidade entre candidatos e vagas de emp
 ## 🔧 Requisitos
 
 ### Obrigatórios
+
 - **Python 3.10 ou superior** ([Download](https://www.python.org/downloads/))
 - **Windows 10/11** (PowerShell)
 
 ### Opcionais (para usar IA)
+
 - **Ollama** ([Download](https://ollama.com/download))
 - **Modelo Ollama** (ex: `llama3.2:3b`)
 
@@ -56,11 +58,13 @@ Set-ExecutionPolicy -Scope CurrentUser -ExecutionPolicy RemoteSigned -Force
 ### Passo 4: Rodar a API
 
 **Opção A - Duplo clique:**
+
 1. Navegue até a pasta do projeto
 2. Clique duas vezes em `run_api.ps1`
 3. Aguarde a mensagem: `Uvicorn running on http://127.0.0.1:8000`
 
 **Opção B - Terminal:**
+
 ```powershell
 .\run_api.ps1
 ```
@@ -129,6 +133,7 @@ Pronto! Agora a API usa IA para análises inteligentes.
 ## 🌐 Endpoints da API
 
 ### Base URL
+
 ```
 http://127.0.0.1:8000
 ```
@@ -140,6 +145,7 @@ http://127.0.0.1:8000
 **Use quando**: Empresa e candidato digitam descrições em texto livre.
 
 **Exemplo**:
+
 ```bash
 curl -X POST http://127.0.0.1:8000/evaluate-texts \
   -H "Content-Type: application/json" \
@@ -150,6 +156,7 @@ curl -X POST http://127.0.0.1:8000/evaluate-texts \
 ```
 
 **Resposta**:
+
 ```json
 {
   "avaliacoes": [
@@ -169,6 +176,7 @@ curl -X POST http://127.0.0.1:8000/evaluate-texts \
 **Use quando**: Candidato tem currículo em PDF.
 
 **Exemplo (via navegador)**:
+
 1. Acesse: http://127.0.0.1:8000/docs
 2. Expanda `POST /extract-resume`
 3. Clique em "Try it out"
@@ -188,19 +196,19 @@ Veja documentação completa: [API_DOCS.md](./API_DOCS.md)
 ```javascript
 // Avaliar candidato vs vaga
 async function avaliarCandidato() {
-  const response = await fetch('http://127.0.0.1:8000/evaluate-texts', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
+  const response = await fetch("http://127.0.0.1:8000/evaluate-texts", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
     body: JSON.stringify({
-      job_text: document.getElementById('vaga').value,
-      self_text: document.getElementById('candidato').value,
-      use_model: true // true = usa IA, false = usa fallback
-    })
+      job_text: document.getElementById("vaga").value,
+      self_text: document.getElementById("candidato").value,
+      use_model: true, // true = usa IA, false = usa fallback
+    }),
   });
-  
+
   const data = await response.json();
   const resultado = data.avaliacoes[0];
-  
+
   console.log(`Score: ${resultado.score}/100`);
   console.log(`Feedback: ${resultado.feedback}`);
 }
@@ -251,6 +259,7 @@ Invoke-WebRequest http://127.0.0.1:8000/health
 ```
 
 **Resultado esperado**:
+
 ```json
 {
   "status": "ok",
@@ -293,6 +302,7 @@ Acesse: http://127.0.0.1:8000/docs
 ### Desabilitar IA (usar apenas fallback)
 
 No arquivo `api/server.py`, linha 14:
+
 ```python
 USE_MODEL_DEFAULT = False  # Mude de True para False
 ```
@@ -304,6 +314,7 @@ USE_MODEL_DEFAULT = False  # Mude de True para False
 ### Problema: "python não é reconhecido"
 
 **Solução**:
+
 1. Reinstale Python marcando "Add Python to PATH"
 2. OU adicione manualmente:
    - Painel de Controle → Sistema → Variáveis de Ambiente
@@ -312,6 +323,7 @@ USE_MODEL_DEFAULT = False  # Mude de True para False
 ### Problema: "uvicorn não é reconhecido"
 
 **Solução**: Use o script fornecido:
+
 ```powershell
 .\run_api.ps1
 ```
@@ -323,6 +335,7 @@ O script cria ambiente virtual e instala tudo automaticamente.
 **Sintomas**: API funciona mas score sempre 0 ou genérico.
 
 **Solução**:
+
 1. Verifique se Ollama está rodando:
    ```powershell
    ollama list
@@ -339,6 +352,7 @@ O script cria ambiente virtual e instala tudo automaticamente.
 ### Problema: "Porta 8000 já está em uso"
 
 **Solução**: Use outra porta:
+
 ```powershell
 .\run_api.ps1 -Port 8080
 ```
@@ -346,6 +360,7 @@ O script cria ambiente virtual e instala tudo automaticamente.
 ### Problema: Erro 403 CORS no front
 
 **Solução**: Configure CORS:
+
 ```powershell
 .\run_api.ps1 -Cors "http://localhost:3000"
 ```
@@ -353,11 +368,13 @@ O script cria ambiente virtual e instala tudo automaticamente.
 ### Problema: API lenta
 
 **Causas possíveis**:
+
 1. Modelo Ollama muito grande → Use `llama3.2:3b` (2GB)
 2. CPU lento → Considere usar fallback (`use_model: false`)
 3. Primeira requisição sempre demora (carrega o modelo)
 
 **Solução**:
+
 ```powershell
 # Use modelo menor
 .\run_api.ps1 -Model "llama3.2:3b"
@@ -463,6 +480,7 @@ Set-ExecutionPolicy -Scope CurrentUser RemoteSigned -Force
 ```
 
 **Score**:
+
 - 0-40: Baixa compatibilidade
 - 41-70: Compatibilidade moderada
 - 71-100: Alta compatibilidade

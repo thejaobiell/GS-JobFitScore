@@ -71,13 +71,15 @@ def _fallback_score(vaga_requisitos: List[str], cand: Candidato) -> Avaliacao:
 @app.post("/evaluate", response_model=AvaliacoesResponse)
 def evaluate(payload: EvaluateRequest):
     """Avalia candidatos contra a vaga. Usa modelo (Ollama) se disponível, senão fallback local."""
-    use_model = payload.use_model if payload.use_model is not None else USE_MODEL_DEFAULT
+    use_model = (
+        payload.use_model if payload.use_model is not None else USE_MODEL_DEFAULT
+    )
 
     prompt = (
         "Você é um avaliador técnico de compatibilidade entre candidatos e vagas de emprego.\n\n"
         "Analise os dados abaixo em formato JSON. Compare as habilidades, experiências e cursos dos candidatos"
         " com os requisitos da vaga.\n\nRetorne APENAS o JSON no seguinte formato:\n\n"
-        "{\n  \"avaliacoes\": [\n    {\n      \"nome\": \"Nome do candidato\",\n      \"score\": numero,\n      \"feedback\": \"breve explicação\"\n    }\n  ]\n}\n\n"
+        '{\n  "avaliacoes": [\n    {\n      "nome": "Nome do candidato",\n      "score": numero,\n      "feedback": "breve explicação"\n    }\n  ]\n}\n\n'
         "Use os seguintes critérios:\n- + pontos para cada habilidade que coincidir\n- Considere experiência e cursos relacionados\n"
         "- Diminua pontos se faltar tecnologias essenciais\n- Score final de 0 a 100\n\nDados:\n"
         + json.dumps(payload.model_dump(), ensure_ascii=False)
@@ -99,7 +101,9 @@ def evaluate(payload: EvaluateRequest):
                     score = max(0, min(100, score))
                     if not nome:
                         continue
-                    avaliacoes.append(Avaliacao(nome=nome, score=score, feedback=feedback))
+                    avaliacoes.append(
+                        Avaliacao(nome=nome, score=score, feedback=feedback)
+                    )
                 except Exception:
                     continue
             if not avaliacoes:
@@ -113,20 +117,27 @@ def evaluate(payload: EvaluateRequest):
             pass
 
     # Fallback local determinístico
-    avaliacoes_fb = [_fallback_score(payload.vaga.requisitos, c) for c in payload.candidatos]
+    avaliacoes_fb = [
+        _fallback_score(payload.vaga.requisitos, c) for c in payload.candidatos
+    ]
     return AvaliacoesResponse(avaliacoes=avaliacoes_fb)
 
 
 @app.post("/extract-resume")
 def extract_resume(file: UploadFile = File(...)):
     """Recebe um PDF e retorna um candidato estruturado extraído via IA, com fallback simples."""
-    if (file.content_type or "").lower() not in ("application/pdf", "application/octet-stream"):
+    if (file.content_type or "").lower() not in (
+        "application/pdf",
+        "application/octet-stream",
+    ):
         raise HTTPException(status_code=400, detail="Envie um arquivo PDF.")
 
     content = file.file.read()
     text = extract_text_from_pdf_bytes(content)
     if not text:
-        raise HTTPException(status_code=400, detail="Não foi possível extrair texto do PDF.")
+        raise HTTPException(
+            status_code=400, detail="Não foi possível extrair texto do PDF."
+        )
 
     prompt = f"""
 Analise o currículo abaixo e extraia as seguintes informações em JSON:
@@ -201,12 +212,19 @@ Auto-descrição:
         cursos = [str(x) for x in data.get("cursos", [])]
         if not nome:
             raise ValueError("Nome vazio")
-        return Candidato(nome=nome, habilidades=habilidades, experiencia=experiencia, cursos=cursos)
+        return Candidato(
+            nome=nome, habilidades=habilidades, experiencia=experiencia, cursos=cursos
+        )
     except Exception:
         # Fallback simples: usa primeiras palavras como nome e o restante como experiencia
         tokens = text.split()
         nome_guess = " ".join(tokens[:4])
-        return Candidato(nome=nome_guess or "Candidato", habilidades=[], experiencia=text[:200], cursos=[])
+        return Candidato(
+            nome=nome_guess or "Candidato",
+            habilidades=[],
+            experiencia=text[:200],
+            cursos=[],
+        )
 
 
 @app.post("/evaluate-self", response_model=AvaliacoesResponse)
@@ -215,7 +233,9 @@ def evaluate_self(req: EvaluateSelfRequest):
     # Extrai candidato
     cand = extract_self(SelfTextRequest(text=req.self_text, use_model=req.use_model))
     # Avalia candidato
-    eval_req = EvaluateRequest(vaga=req.vaga, candidatos=[cand], use_model=req.use_model)
+    eval_req = EvaluateRequest(
+        vaga=req.vaga, candidatos=[cand], use_model=req.use_model
+    )
     return evaluate(eval_req)
 
 
@@ -251,12 +271,19 @@ Descrição da vaga:
         descricao = str(data.get("descricao", "")).strip() or None
         if not titulo:
             raise ValueError("Título vazio")
-        return Vaga(titulo=titulo, empresa=empresa, requisitos=requisitos, descricao=descricao)
+        return Vaga(
+            titulo=titulo, empresa=empresa, requisitos=requisitos, descricao=descricao
+        )
     except Exception:
         # Fallback simples: usa primeiras palavras como título
         tokens = text.split()
         titulo_guess = " ".join(tokens[:6])
-        return Vaga(titulo=titulo_guess or "Vaga", empresa=None, requisitos=[], descricao=text[:200])
+        return Vaga(
+            titulo=titulo_guess or "Vaga",
+            empresa=None,
+            requisitos=[],
+            descricao=text[:200],
+        )
 
 
 @app.post("/evaluate-texts", response_model=AvaliacoesResponse)
