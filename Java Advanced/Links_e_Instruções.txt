@@ -1,0 +1,17 @@
+pitch: https://www.youtube.com/watch?v=21drlvKfcUk
+
+demonstração: https://www.youtube.com/watch?v=b7_yIofOE7k
+
+repositório: https://github.com/thejaobiell/GS-JOBFIT-SCORE-Java
+
+deploy:https://jobfitscore.onrender.com
+
+Banco de Dados Render(Postgresql)
+
+   Host: dpg-d4b2k5hr0fns73el9bo0-a.oregon-postgres.render.com
+   Port: 5432
+   Username: rm554874
+   Password: D7cWaZ023TbxJvSTdOBIKY0esPBzXUw7
+   Database: jobfitscore
+
+Para mais informações, leia o "README.MD"
