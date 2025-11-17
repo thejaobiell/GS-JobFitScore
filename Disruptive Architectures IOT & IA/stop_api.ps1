@@ -16,7 +16,8 @@ if ($uvicornProcesses) {
         Stop-Process -Id $proc.Id -Force
     }
     Write-Host "   ✅ API encerrada com sucesso" -ForegroundColor Green
-} else {
+}
+else {
     Write-Host "   ℹ️  Nenhum processo da API encontrado" -ForegroundColor Gray
 }
 
@@ -34,10 +35,12 @@ if ($ollamaProcesses) {
             Stop-Process -Id $proc.Id -Force
         }
         Write-Host "   ✅ Ollama encerrado com sucesso" -ForegroundColor Green
-    } else {
+    }
+    else {
         Write-Host "   ⏭️  Ollama mantido em execução" -ForegroundColor Gray
     }
-} else {
+}
+else {
     Write-Host "   ℹ️  Nenhum processo do Ollama encontrado" -ForegroundColor Gray
 }
 
@@ -50,7 +53,8 @@ if ($portProcess) {
     Write-Host "   Processo usando porta 8000 (PID: $processId)" -ForegroundColor Yellow
     Stop-Process -Id $processId -Force
     Write-Host "   ✅ Porta 8000 liberada" -ForegroundColor Green
-} else {
+}
+else {
     Write-Host "   ℹ️  Porta 8000 já está livre" -ForegroundColor Gray
 }
 
