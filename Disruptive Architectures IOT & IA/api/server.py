@@ -21,9 +21,16 @@ from .services.ollama_client import generate_json, OllamaError
 from .services.pdf_reader import extract_text_from_pdf_bytes
 
 APP_NAME = os.getenv("APP_NAME", "GS-JobFitScore API")
+APP_VERSION = "1.0.0"
 USE_MODEL_DEFAULT = os.getenv("USE_MODEL", "true").lower() in ("1", "true", "yes")
 
-app = FastAPI(title=APP_NAME)
+app = FastAPI(
+    title=APP_NAME,
+    version=APP_VERSION,
+    description="API de avaliação de compatibilidade candidato-vaga usando IA (Ollama)",
+    docs_url="/docs",
+    redoc_url="/redoc",
+)
 
 app.add_middleware(
     CORSMiddleware,
@@ -31,16 +38,40 @@ app.add_middleware(
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
+    expose_headers=["*"],
 )
+
+
+@app.get("/")
+def root():
+    """Informações básicas da API."""
+    return {
+        "name": APP_NAME,
+        "version": APP_VERSION,
+        "status": "online",
+        "docs": "/docs",
+        "health": "/health",
+        "endpoints": {
+            "evaluate": "POST /evaluate - Avalia candidatos vs vaga",
+            "extract_resume": "POST /extract-resume - Extrai currículo PDF",
+            "extract_self": "POST /extract-self - Extrai candidato de texto",
+            "extract_job": "POST /extract-job - Extrai vaga de texto",
+            "evaluate_self": "POST /evaluate-self - Avalia auto-descrição vs vaga",
+            "evaluate_texts": "POST /evaluate-texts - Avalia textos livres",
+        },
+    }
 
 
 @app.get("/health")
 def health():
+    """Verifica status e configurações da API."""
     return {
         "status": "ok",
+        "version": APP_VERSION,
         "use_model_default": USE_MODEL_DEFAULT,
         "ollama_model": os.getenv("OLLAMA_MODEL", "llama3.2:3b"),
         "ollama_url": os.getenv("OLLAMA_URL", "http://127.0.0.1:11434/api/generate"),
+        "cors_enabled": True,
     }
 
 

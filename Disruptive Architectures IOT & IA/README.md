@@ -388,19 +388,38 @@ O script cria ambiente virtual e instala tudo automaticamente.
 ## 📁 Estrutura do Projeto
 
 ```
-GS-JobFitScore/
+Disruptive Architectures IOT & IA/
 ├── api/
 │   ├── __init__.py
-│   ├── server.py              # FastAPI app principal
-│   ├── models.py              # Modelos Pydantic
+│   ├── server.py                    # FastAPI app principal
+│   ├── models.py                    # Modelos Pydantic
 │   └── services/
-│       ├── ollama_client.py   # Cliente HTTP do Ollama
-│       └── pdf_reader.py      # Extrator de PDF
-├── run_api.ps1                # Script de inicialização
-├── requirements.txt           # Dependências Python
-├── README.md                  # Este arquivo
-└── API_DOCS.md               # Documentação técnica da API
+│       ├── ollama_client.py         # Cliente HTTP do Ollama
+│       └── pdf_reader.py            # Extrator de PDF
+├── run_api.ps1                      # Script de inicialização
+├── stop_api.ps1                     # Script para parar API
+├── requirements.txt                 # Dependências Python
+├── job_fit_score_ollama.py          # Script standalone
+├── job_fit_score_ollama.ipynb       # Jupyter Notebook
+├── README.md                        # Este arquivo
+├── API_INTEGRATION.md               # 📘 Documentação completa da API
+└── JAVA_INTEGRATION_EXAMPLES.md    # ☕ Exemplos práticos Java
 ```
+
+## 📚 Documentação
+
+- **[README.md](./README.md)** - Guia de início rápido (você está aqui!)
+- **[API_INTEGRATION.md](./API_INTEGRATION.md)** - Documentação completa da API
+  - Todos os endpoints detalhados
+  - DTOs e modelos Java completos
+  - Cliente WebClient configurado
+  - Exemplos de integração
+- **[JAVA_INTEGRATION_EXAMPLES.md](./JAVA_INTEGRATION_EXAMPLES.md)** - Exemplos práticos Java
+  - Setup completo passo a passo
+  - Integração com Candidaturas
+  - Upload de currículo
+  - Tratamento de erros
+  - Testes unitários
 
 ---
 
