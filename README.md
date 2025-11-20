@@ -1,8 +1,7 @@
 # JobFit-Score – ARQUIVOS PARA ENVIAR
 
-> REPOSITÓRIO DE ENTREGA DE SPRINTS (19/11/2025)
+> REPOSITÓRIO DE ENTREGA DE SPRINTS (23/11/2025)
 
----
 
 ## 👨‍💻 Integrantes do Grupo
 
