@@ -1,5 +1,5 @@
 <div align="center">
-  <img src="./assets/logo.png" alt="JobFit-Score Logo" width="200"/>
+  <img src="https://raw.githubusercontent.com/FIAP-MOBILE/global-solution-jobfit-score/refs/heads/main/assets/logo.png?token=GHSAT0AAAAAADIKTOHLO7E3LBEWJHS5PVJG2I7EMHA" alt="JobFit-Score Logo" width="200"/>
   
   # JobFit-Score
   
