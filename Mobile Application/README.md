@@ -1,8 +1,8 @@
 <div align="center">
-  <img src="https://raw.githubusercontent.com/FIAP-MOBILE/global-solution-jobfit-score/refs/heads/main/assets/logo.png?token=GHSAT0AAAAAADIKTOHLO7E3LBEWJHS5PVJG2I7EMHA" alt="JobFit-Score Logo" width="200"/>
-  
-  # JobFit-Score
-  
+  <img src="https://raw.githubusercontent.com/thejaobiell/GS-JOBFIT-SCORE-Java/refs/heads/main/src/main/resources/static/logo.jpeg" alt="MottuFlow" width="200"/>
+  <h1>JobFit-Score</h1>
+</div>
+
   [![React Native](https://img.shields.io/badge/React%20Native-v0.76-61DAFB?logo=react)](https://reactnative.dev/)
   [![Expo](https://img.shields.io/badge/Expo-SDK%2053-000020?logo=expo)](https://expo.dev/)
   [![Spring Boot](https://img.shields.io/badge/Spring%20Boot-3.x-6DB33F?logo=springboot)](https://spring.io/projects/spring-boot)
