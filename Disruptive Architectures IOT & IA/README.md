@@ -1,136 +1,163 @@
-# 🎯 JobFitScore - Sistema de Avaliação de Candidatos com IA
+<div align="center">
+  <img src="https://raw.githubusercontent.com/thejaobiell/GS-JOBFIT-SCORE-Java/refs/heads/main/src/main/resources/static/logo.jpeg" alt="MottuFlow" width="200"/>
+  <h1>JobFit-Score</h1>
+</div>
 
-Sistema inteligente que avalia a compatibilidade entre candidatos e vagas de emprego usando IA local (Ollama) ou fallback determinístico.
+[![Python](https://img.shields.io/badge/Python-3.10+-blue.svg)](https://www.python.org/downloads/)
+[![FastAPI](https://img.shields.io/badge/FastAPI-Latest-green.svg)](https://fastapi.tiangolo.com/)
 
-## 📋 Índice
-
-- [Requisitos](#-requisitos)
-- [Instalação Rápida](#-instalação-rápida)
-- [Como Usar](#-como-usar)
-- [Endpoints da API](#-endpoints-da-api)
-- [Exemplos Práticos](#-exemplos-práticos)
-- [Troubleshooting](#-troubleshooting)
+> 📦 **Repositório IA/IOT**: [github.com/thejaobiell/GS-JOBFIT-SCORE-IA_IOT](https://github.com/thejaobiell/GS-JOBFIT-SCORE-IA_IOT)
 
 ---
 
-## 🔧 Requisitos
+## 🎥 Vídeo Demonstrativo
+
+Assista ao vídeo completo demonstrando o funcionamento do sistema:
+
+[![Vídeo Demonstrativo](https://img.youtube.com/vi/ERWwGtQpkZk/maxresdefault.jpg)](https://www.youtube.com/watch?v=ERWwGtQpkZk)
+
+🔗 **Link direto**: https://www.youtube.com/watch?v=ERWwGtQpkZk
+
+---
+
+## 🎯 Sobre o Projeto
+
+O **JobFit-Score** é um sistema que avalia automaticamente a compatibilidade entre candidatos e vagas de emprego. Utiliza IA local via Ollama para análise inteligente, com fallback determinístico para funcionar mesmo sem modelos de linguagem.
+
+### Principais funcionalidades
+
+- ✅ Avaliação automática de candidatos vs vagas
+- 📄 Extração de dados de currículos em PDF
+- 🤖 Análise com IA local (Ollama) ou fallback determinístico
+- 🔄 API REST completa com documentação Swagger
+- 🎨 Scripts automatizados para deploy simplificado
+
+---
+
+## 🌟 Características
+
+- **IA Local**: Usa modelos Ollama sem enviar dados para serviços externos
+- **Fallback Inteligente**: Funciona mesmo sem IA disponível
+- **API RESTful**: Interface padronizada e documentada
+- **Extração de PDF**: Processa currículos automaticamente
+- **Análise de Texto Livre**: Avalia descrições não estruturadas
+- **Configurável**: Múltiplas opções de configuração via CLI
+
+---
+
+## 📦 Requisitos
 
 ### Obrigatórios
 
-- **Python 3.10 ou superior** ([Download](https://www.python.org/downloads/))
-- **Windows 10/11** (PowerShell)
+| Requisito                               | Versão Mínima | Link                                          |
+| --------------------------------------- | ------------- | --------------------------------------------- |
+| Python                                  | 3.10+         | [Download](https://www.python.org/downloads/) |
+| Terminal que consiga rodar arquivos .sh | Qualquer      | [Git Bash](https://git-scm.com/install/)      |
 
-### Opcionais (para usar IA)
+### Para IA
 
-- **Ollama** ([Download](https://ollama.com/download))
-- **Modelo Ollama** (ex: `llama3.2:3b`)
+| Requisito  | Descrição                | Link                                  |
+| ---------- | ------------------------ | ------------------------------------- |
+| Ollama     | Runtime para modelos LLM | [ollama.com](https://ollama.com/)     |
+| Modelo LLM | Ex: llama3.2:3b          | [Modelos](https://ollama.com/library) |
 
-> **Nota**: O sistema funciona SEM Ollama usando fallback determinístico!
-
----
-
-## 🚀 Instalação Rápida
-
-### Passo 1: Baixar o Projeto
-
-```powershell
-cd C:\Users\SEU_USUARIO\Documents
-git clone [URL_DO_REPOSITORIO]
-cd "GS-JobFitScore\Disruptive Architectures IOT & IA"
-```
-
-### Passo 2: Instalar Python
-
-1. Baixe Python 3.10+ em https://www.python.org/downloads/
-2. Durante instalação, **marque**: ✅ "Add Python to PATH"
-3. Verifique instalação:
-   ```powershell
-   python --version
-   # Deve mostrar: Python 3.10.x ou superior
-   ```
-
-### Passo 3: Configurar Permissão de Scripts (uma vez)
-
-```powershell
-Set-ExecutionPolicy -Scope CurrentUser -ExecutionPolicy RemoteSigned -Force
-```
-
-### Passo 4: Rodar a API
-
-**Opção A - Duplo clique:**
-
-1. Navegue até a pasta do projeto
-2. Clique duas vezes em `run_api.ps1`
-3. Aguarde a mensagem: `Uvicorn running on http://127.0.0.1:8000`
-
-**Opção B - Terminal:**
-
-```powershell
-.\run_api.ps1
-```
-
-### Passo 5: Testar
-
-Abra o navegador em: http://127.0.0.1:8000/docs
-
-✅ Se aparecer a documentação interativa (Swagger), está funcionando!
+> **Nota**: O sistema funciona sem IA usando análise determinística baseada em regras.
 
 ---
 
-## 📖 Como Usar
+## 🚀 Instalação
 
-### Modo 1: Sem IA (Funciona Sempre)
+### 1. Clone o repositório
 
-O sistema funciona imediatamente sem instalar nada além do Python:
-
-```powershell
-.\run_api.ps1
+```bash
+git clone https://github.com/thejaobiell/GS-JOBFIT-SCORE-IA_IOT.git
+cd GS-JOBFIT-SCORE-IA_IOT
 ```
 
-- ✅ Extrai candidatos de PDFs (sem estruturação inteligente)
-- ✅ Avalia candidatos usando lógica determinística
-- ✅ Score de 0-100 baseado em match de palavras-chave
+### 2. Configure permissões
 
-### Modo 2: Com IA (Ollama)
+```bash
+chmod +x run_api.sh stop_api.sh
+```
 
-Para ter análise inteligente com IA local:
+### 3. Execute a aplicação
 
-#### 1. Instalar Ollama
+```bash
+./run_api.sh
+```
 
-- Windows: https://ollama.com/download
-- Baixe e instale (Next → Next → Finish)
+A API estará disponível em:
 
-#### 2. Baixar um Modelo
+- **Servidor**: http://localhost:8000
+- **Documentação**: http://localhost:8000/docs
+- **Health Check**: http://localhost:8000/health
 
-Abra um **novo terminal** e execute:
+---
 
-```powershell
-# Modelo pequeno e rápido (2GB)
+## 💻 Uso
+
+### Modo Básico (sem IA)
+
+```bash
+./run_api.sh
+```
+
+O sistema usará o fallback determinístico automaticamente.
+
+### Modo Avançado (com Ollama)
+
+#### Passo 1: Instale e inicie o Ollama
+
+```bash
+# Baixe um modelo (exemplo: llama3.2:3b)
 ollama pull llama3.2:3b
 
-# OU modelo maior e mais preciso (16GB)
-ollama pull gemma3:27b
-```
-
-#### 3. Iniciar Ollama
-
-```powershell
+# Inicie o servidor Ollama
 ollama serve
 ```
 
-Deixe esse terminal aberto (Ollama rodando em background).
+#### Passo 2: Execute com IA habilitada
 
-#### 4. Rodar a API (em outro terminal)
-
-```powershell
-.\run_api.ps1
+```bash
+./run_api.sh --model llama3.2:3b
 ```
 
-Pronto! Agora a API usa IA para análises inteligentes.
+### Opções de Configuração
+
+O script `run_api.sh` aceita os seguintes parâmetros:
+
+| Parâmetro      | Descrição                       | Exemplo                                            |
+| -------------- | ------------------------------- | -------------------------------------------------- |
+| `--host`       | Define o host do servidor       | `--host 0.0.0.0`                                   |
+| `--port`       | Define a porta do servidor      | `--port 9000`                                      |
+| `--model`      | Modelo Ollama a usar            | `--model llama3.2:1b`                              |
+| `--ollama-url` | URL da API do Ollama            | `--ollama-url http://localhost:11434/api/generate` |
+| `--cors`       | Origens CORS permitidas         | `--cors "*"`                                       |
+| `--no-install` | Pula instalação de dependências | `--no-install`                                     |
+| `--help`       | Exibe ajuda                     | `--help`                                           |
+
+### Exemplos de Uso
+
+```bash
+# Servidor público na porta 9001 com modelo específico
+./run_api.sh --host 0.0.0.0 --port 9001 --model llama3.2:3b
+
+# Apenas mudar o modelo
+./run_api.sh --model gemma2:27b
+
+# Configuração completa
+./run_api.sh --host 0.0.0.0 --port 9000 --model llama3.2:3b --cors "*" --no-install
+```
+
+### Parando o Servidor
+
+```bash
+./stop_api.sh
+```
 
 ---
 
-## 🌐 Endpoints da API
+## 📚 Documentação da API
 
 ### Base URL
 
@@ -138,372 +165,287 @@ Pronto! Agora a API usa IA para análises inteligentes.
 http://127.0.0.1:8000
 ```
 
-### 1. Avaliar Candidato com Texto Simples ⭐ **RECOMENDADO**
+### Endpoints Principais
 
-**Endpoint**: `POST /evaluate-texts`
+#### 1. **GET /** - Informações da API
 
-**Use quando**: Empresa e candidato digitam descrições em texto livre.
+Retorna informações gerais sobre a API.
 
-**Exemplo**:
-
-```bash
-curl -X POST http://127.0.0.1:8000/evaluate-texts \
-  -H "Content-Type: application/json" \
-  -d '{
-    "job_text": "Procuramos desenvolvedor React Native com TypeScript e Git",
-    "self_text": "Sou Ana, 2 anos com React Native e TypeScript"
-  }'
-```
-
-**Resposta**:
+**Resposta:**
 
 ```json
 {
-  "avaliacoes": [
+  "name": "GS-JobFitScore API",
+  "version": "1.0.0",
+  "status": "online",
+  "docs": "/docs",
+  "health": "/health"
+}
+```
+
+---
+
+#### 2. **GET /health** - Health Check
+
+Verifica o status do sistema.
+
+**Exemplo:**
+
+```bash
+curl http://127.0.0.1:8000/health
+```
+
+**Resposta:**
+
+```json
+{
+  "status": "ok",
+  "version": "1.0.0",
+  "use_model_default": true,
+  "ollama_model": "llama3.2:3b",
+  "ollama_url": "http://127.0.0.1:11434/api/generate",
+  "cors_enabled": true
+}
+```
+
+---
+
+#### 3. **POST /evaluate** - Avaliar Candidatos
+
+Avalia a compatibilidade entre candidatos e uma vaga.
+
+**Request Body:**
+
+```json
+{
+  "vaga": {
+    "titulo": "Desenvolvedor Mobile",
+    "empresa": "TechX",
+    "requisitos": ["react native", "typescript", "api rest", "git"]
+  },
+  "candidatos": [
     {
-      "nome": "Ana",
-      "score": 85,
-      "feedback": "Habilidades presentes: react native, typescript. Faltando: git."
+      "nome": "João Silva",
+      "habilidades": ["react native", "javascript", "git"],
+      "experiencia": "2 anos em desenvolvimento mobile",
+      "cursos": ["Bootcamp React Native", "Curso TypeScript"]
     }
   ]
 }
 ```
 
-### 2. Upload de Currículo PDF
-
-**Endpoint**: `POST /extract-resume`
-
-**Use quando**: Candidato tem currículo em PDF.
-
-**Exemplo (via navegador)**:
-
-1. Acesse: http://127.0.0.1:8000/docs
-2. Expanda `POST /extract-resume`
-3. Clique em "Try it out"
-4. Faça upload do PDF
-5. Clique em "Execute"
-
-### 3. Outros Endpoints
-
-Veja documentação completa: [API_DOCS.md](./API_DOCS.md)
-
----
-
-## 💡 Exemplos Práticos
-
-### Exemplo 1: Front-end JavaScript
-
-```javascript
-// Avaliar candidato vs vaga
-async function avaliarCandidato() {
-  const response = await fetch("http://127.0.0.1:8000/evaluate-texts", {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({
-      job_text: document.getElementById("vaga").value,
-      self_text: document.getElementById("candidato").value,
-      use_model: true, // true = usa IA, false = usa fallback
-    }),
-  });
-
-  const data = await response.json();
-  const resultado = data.avaliacoes[0];
-
-  console.log(`Score: ${resultado.score}/100`);
-  console.log(`Feedback: ${resultado.feedback}`);
-}
-```
-
-### Exemplo 2: Python
-
-```python
-import requests
-
-response = requests.post('http://127.0.0.1:8000/evaluate-texts', json={
-    'job_text': 'Desenvolvedor Python com Django e PostgreSQL',
-    'self_text': 'Tenho 3 anos com Python e Django',
-    'use_model': True
-})
-
-resultado = response.json()['avaliacoes'][0]
-print(f"Score: {resultado['score']}/100")
-print(f"Feedback: {resultado['feedback']}")
-```
-
-### Exemplo 3: PowerShell
-
-```powershell
-$body = @{
-    job_text = "Desenvolvedor React Native"
-    self_text = "2 anos com React Native"
-} | ConvertTo-Json
-
-Invoke-RestMethod -Uri http://127.0.0.1:8000/evaluate-texts `
-                  -Method POST `
-                  -ContentType "application/json" `
-                  -Body $body
-```
-
----
-
-## 🔍 Testando a API
-
-### Teste 1: Health Check
-
-```powershell
-# PowerShell
-Invoke-WebRequest http://127.0.0.1:8000/health
-
-# Ou navegador
-# http://127.0.0.1:8000/health
-```
-
-**Resultado esperado**:
+**Resposta:**
 
 ```json
 {
-  "status": "ok",
-  "use_model_default": true,
-  "ollama_model": "llama3.2:3b",
-  "ollama_url": "http://127.0.0.1:11434/api/generate"
+  "vaga": "Desenvolvedor Mobile",
+  "candidatos_avaliados": [
+    {
+      "nome": "João Silva",
+      "score": 85,
+      "justificativa": "Forte compatibilidade com React Native e Git...",
+      "recomendacao": "Recomendado"
+    }
+  ]
 }
 ```
 
-### Teste 2: Documentação Interativa
-
-Acesse: http://127.0.0.1:8000/docs
-
-- ✅ Teste todos os endpoints visualmente
-- ✅ Veja exemplos de requisição/resposta
-- ✅ Execute testes direto do navegador
-
 ---
 
-## ⚙️ Configuração Avançada
+#### 4. **POST /extract-resume** - Extrair Currículo PDF
 
-### Mudar Modelo Ollama
+Extrai informações estruturadas de um currículo em PDF.
 
-```powershell
-.\run_api.ps1 -Model "gemma3:27b"
+**Request:** multipart/form-data
+
+```
+file: curriculo.pdf
 ```
 
-### Mudar Porta
+**Resposta:**
 
-```powershell
-.\run_api.ps1 -Port 8080
-```
-
-### Configurar CORS (para front em outra porta)
-
-```powershell
-.\run_api.ps1 -Cors "http://localhost:3000,http://localhost:5173"
-```
-
-### Desabilitar IA (usar apenas fallback)
-
-No arquivo `api/server.py`, linha 14:
-
-```python
-USE_MODEL_DEFAULT = False  # Mude de True para False
+```json
+{
+  "nome": "Maria Santos",
+  "habilidades": ["python", "django", "postgresql"],
+  "experiencia": "5 anos como desenvolvedora backend",
+  "cursos": ["Engenharia de Software", "Certificação AWS"]
+}
 ```
 
 ---
 
-## 🐛 Troubleshooting
+#### 5. **POST /extract-self** - Extrair Auto-Descrição
 
-### Problema: "python não é reconhecido"
+Extrai informações estruturadas de texto livre sobre o candidato.
 
-**Solução**:
+**Request Body:**
 
-1. Reinstale Python marcando "Add Python to PATH"
-2. OU adicione manualmente:
-   - Painel de Controle → Sistema → Variáveis de Ambiente
-   - Adicione `C:\Python310` e `C:\Python310\Scripts` ao PATH
-
-### Problema: "uvicorn não é reconhecido"
-
-**Solução**: Use o script fornecido:
-
-```powershell
-.\run_api.ps1
+```json
+{
+  "text": "Meu nome é João, tenho 3 anos de experiência com React Native, TypeScript e integração de APIs. Completei bootcamp de desenvolvimento mobile."
+}
 ```
 
-O script cria ambiente virtual e instala tudo automaticamente.
+**Resposta:**
 
-### Problema: "Ollama não conecta"
-
-**Sintomas**: API funciona mas score sempre 0 ou genérico.
-
-**Solução**:
-
-1. Verifique se Ollama está rodando:
-   ```powershell
-   ollama list
-   ```
-2. Se não estiver, inicie:
-   ```powershell
-   ollama serve
-   ```
-3. Baixe um modelo:
-   ```powershell
-   ollama pull llama3.2:3b
-   ```
-
-### Problema: "Porta 8000 já está em uso"
-
-**Solução**: Use outra porta:
-
-```powershell
-.\run_api.ps1 -Port 8080
+```json
+{
+  "nome": "João",
+  "habilidades": ["react native", "typescript", "apis"],
+  "experiencia": "3 anos",
+  "cursos": ["bootcamp mobile"]
+}
 ```
 
-### Problema: Erro 403 CORS no front
+---
 
-**Solução**: Configure CORS:
+#### 6. **POST /extract-job** - Extrair Vaga
 
-```powershell
-.\run_api.ps1 -Cors "http://localhost:3000"
+Extrai informações estruturadas de uma descrição de vaga.
+
+**Request Body:**
+
+```json
+{
+  "text": "A empresa X busca Desenvolvedor Backend com experiência em Java, Spring Boot, Docker e microserviços."
+}
 ```
 
-### Problema: API lenta
+**Resposta:**
 
-**Causas possíveis**:
-
-1. Modelo Ollama muito grande → Use `llama3.2:3b` (2GB)
-2. CPU lento → Considere usar fallback (`use_model: false`)
-3. Primeira requisição sempre demora (carrega o modelo)
-
-**Solução**:
-
-```powershell
-# Use modelo menor
-.\run_api.ps1 -Model "llama3.2:3b"
-
-# OU desabilite IA para testes rápidos
-# (edite api/server.py, linha 14: USE_MODEL_DEFAULT = False)
+```json
+{
+  "titulo": "Desenvolvedor Backend",
+  "empresa": "empresa X",
+  "requisitos": ["java", "spring boot", "docker", "microserviços"]
+}
 ```
+
+---
+
+#### 7. **POST /evaluate-self** - Avaliar Auto-Descrição
+
+Avalia um candidato através de sua auto-descrição em texto livre.
+
+**Request Body:**
+
+```json
+{
+  "vaga": {
+    "titulo": "Desenvolvedor Java",
+    "empresa": "TechCorp",
+    "requisitos": ["java", "spring", "docker", "kubernetes"]
+  },
+  "self_text": "Sou desenvolvedor Java com 4 anos de experiência. Trabalho com Spring Framework e Docker no dia a dia."
+}
+```
+
+---
+
+#### 8. **POST /evaluate-texts** - Avaliar Textos Livres
+
+Avalia compatibilidade entre descrição de vaga e auto-descrição do candidato.
+
+**Request Body:**
+
+```json
+{
+  "job_text": "Buscamos Desenvolvedor Android com experiência em Kotlin, Jetpack Compose e APIs REST.",
+  "self_text": "Trabalho com Kotlin há 2 anos, desenvolvo apps Android nativos e integro APIs."
+}
+```
+
+---
+
+### Documentação Interativa
+
+Acesse a documentação Swagger completa em:
+
+```
+http://localhost:8000/docs
+```
+
+Lá você pode testar todos os endpoints diretamente no navegador.
 
 ---
 
 ## 📁 Estrutura do Projeto
 
 ```
-Disruptive Architectures IOT & IA/
+GS-JOBFIT-SCORE-IA_IOT/
 ├── api/
 │   ├── __init__.py
-│   ├── server.py                    # FastAPI app principal
-│   ├── models.py                    # Modelos Pydantic
+│   ├── models.py              # Modelos Pydantic
+│   ├── server.py              # Servidor FastAPI
 │   └── services/
-│       ├── ollama_client.py         # Cliente HTTP do Ollama
-│       └── pdf_reader.py            # Extrator de PDF
-├── run_api.ps1                      # Script de inicialização
-├── stop_api.ps1                     # Script para parar API
-├── requirements.txt                 # Dependências Python
-├── job_fit_score_ollama.py          # Script standalone
-├── job_fit_score_ollama.ipynb       # Jupyter Notebook
-├── README.md                        # Este arquivo
-├── API_INTEGRATION.md               # 📘 Documentação completa da API
-└── JAVA_INTEGRATION_EXAMPLES.md    # ☕ Exemplos práticos Java
+│       ├── __init__.py
+│       ├── ollama_client.py   # Cliente Ollama
+│       └── pdf_reader.py      # Leitor de PDF
+│
+│
+├── examples/
+│   ├── job_fit_score_ollama.ipynb
+│   └── resultado_avaliacao_ollama.json
+├── scripts/
+│   ├── run_api.sh             # Script de inicialização
+│   └── stop_api.sh            # Script de parada
+├── job_fit_score_ollama.py    # Script principal
+├── requirements.txt           # Dependências Python
+└── README.md                  # Este arquivo
 ```
 
-## 📚 Documentação
-
-- **[README.md](./README.md)** - Guia de início rápido (você está aqui!)
-- **[API_INTEGRATION.md](./API_INTEGRATION.md)** - Documentação completa da API
-  - Todos os endpoints detalhados
-  - DTOs e modelos Java completos
-  - Cliente WebClient configurado
-  - Exemplos de integração
-- **[JAVA_INTEGRATION_EXAMPLES.md](./JAVA_INTEGRATION_EXAMPLES.md)** - Exemplos práticos Java
-  - Setup completo passo a passo
-  - Integração com Candidaturas
-  - Upload de currículo
-  - Tratamento de erros
-  - Testes unitários
-
 ---
 
-## 🤝 Contribuindo
+## 🔧 Configuração Avançada
 
-1. Fork o projeto
-2. Crie uma branch: `git checkout -b feature/nova-funcionalidade`
-3. Commit: `git commit -m 'Adiciona nova funcionalidade'`
-4. Push: `git push origin feature/nova-funcionalidade`
-5. Abra um Pull Request
+### Variáveis de Ambiente
 
----
+O sistema utiliza as seguintes variáveis de ambiente (configuradas automaticamente pelo script):
 
-## 📝 Licença
-
-Este projeto foi desenvolvido para fins acadêmicos (Global Solution - FIAP).
-
----
-
-## 🆘 Suporte
-
-**Problemas comuns**: Veja [Troubleshooting](#-troubleshooting)
-
-**Documentação técnica**: [API_DOCS.md](./API_DOCS.md)
-
-**Issues**: Abra uma issue no repositório
-
----
-
-## ✨ Features
-
-- ✅ 7 endpoints REST diferentes
-- ✅ Suporte a texto livre (empresa + candidato)
-- ✅ Upload de currículo em PDF
-- ✅ IA local com Ollama (opcional)
-- ✅ Fallback determinístico (sempre funciona)
-- ✅ CORS configurável
-- ✅ Documentação interativa (Swagger)
-- ✅ Script de instalação automática
-- ✅ Score de 0-100 + feedback detalhado
-
----
-
-## 🚦 Quick Start (1 minuto)
-
-```powershell
-# 1. Clone o projeto
-git clone [URL]
-cd "GS-JobFitScore\Disruptive Architectures IOT & IA"
-
-# 2. Configure permissões (só uma vez)
-Set-ExecutionPolicy -Scope CurrentUser RemoteSigned -Force
-
-# 3. Rode a API
-.\run_api.ps1
-
-# 4. Teste no navegador
-# http://127.0.0.1:8000/docs
+```bash
+OLLAMA_MODEL=llama3.2:3b
+OLLAMA_URL=http://127.0.0.1:11434/api/generate
+API_HOST=127.0.0.1
+API_PORT=8000
+CORS_ORIGINS=*
 ```
 
-**Pronto!** 🎉 A API está rodando e pronta para usar.
+### Modelos Ollama Recomendados
+
+| Modelo      | Tamanho | Uso Recomendado  |
+| ----------- | ------- | ---------------- |
+| llama3.2:1b | ~1GB    | Testes rápidos   |
+| llama3.2:3b | ~3GB    | Uso geral        |
+| gemma2:9b   | ~9GB    | Alta precisão    |
+| gemma2:27b  | ~27GB   | Máxima qualidade |
 
 ---
 
-## 📊 Exemplo de Resposta
+## 👥 Equipe de Desenvolvimento
 
-```json
-{
-  "avaliacoes": [
-    {
-      "nome": "João Silva",
-      "score": 78,
-      "feedback": "Habilidades presentes: react native, javascript, git. Faltando: typescript, ui/ux básico. Cursos relacionados: 1."
-    }
-  ]
-}
-```
-
-**Score**:
-
-- 0-40: Baixa compatibilidade
-- 41-70: Compatibilidade moderada
-- 71-100: Alta compatibilidade
-
----
-
-**Desenvolvido com ❤️ para Global Solution - FIAP 2025**
+<table>
+<tr>
+<td align="center">
+<a href="https://github.com/thejaobiell">
+<img src="https://github.com/thejaobiell.png" width="100px;" alt="João Gabriel"/><br>
+<sub><b>João Gabriel Boaventura</b></sub><br>
+<sub>RM554874 • 2TDSB2025</sub><br>
+</a>
+</td>
+<td align="center">
+<a href="https://github.com/leomotalima">
+<img src="https://github.com/leomotalima.png" width="100px;" alt="Léo Mota"/><br>
+<sub><b>Léo Mota Lima</b></sub><br>
+<sub>RM557851 • 2TDSB2025</sub><br>
+</a>
+</td>
+<td align="center">
+<a href="https://github.com/LucasLDC">
+<img src="https://github.com/LucasLDC.png" width="100px;" alt="Lucas Leal"/><br>
+<sub><b>Lucas Leal das Chagas</b></sub><br>
+<sub>RM551124 • 2TDSB2025</sub><br>
+</a>
+</td>
+</tr>
+</table>
