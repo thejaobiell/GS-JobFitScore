@@ -4,7 +4,7 @@ demonstração: https://www.youtube.com/watch?v=b7_yIofOE7k
 
 repositório: https://github.com/thejaobiell/GS-JOBFIT-SCORE-Java
 
-deploy:https://jobfitscore.onrender.com
+deploy: https://jobfitscore.onrender.com
 
 Banco de Dados Render(Postgresql)
 
