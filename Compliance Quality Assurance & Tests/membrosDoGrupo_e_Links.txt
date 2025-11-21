@@ -7,3 +7,6 @@ Lucas Leal das Chagas - RM551124 - 2TDSB2025
 azure devops:  https://dev.azure.com/JobFit-Score/JobFit%20Score
 
 vídeo de demonstração dos testes: https://youtu.be/3zYSU5vRmFI
+
+* o arquivo `jobfitscore.side` é o arquivo utilizado na extensão 'Selenium IDE' no firefox
+extensão usada pra os testes: https://addons.mozilla.org/pt-BR/firefox/addon/selenium-ide/
