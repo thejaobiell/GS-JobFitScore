@@ -4,7 +4,7 @@ João Gabriel Boaventura Marques e Silva - RM554874 - 2TDSB2025
 Léo Mota Lima - RM557851 - 2TDSB2025
 Lucas Leal das Chagas - RM551124 - 2TDSB2025
 
-azure devops:  https://dev.azure.com/JobFit-Score/JobFit%20Score
+azure devops: https://dev.azure.com/RM554874/JobFit-Score-AssuranceTests
 
 vídeo de demonstração dos testes: https://youtu.be/3zYSU5vRmFI
 
