@@ -5,3 +5,5 @@ Léo Mota Lima - RM557851 - 2TDSB2025
 Lucas Leal das Chagas - RM551124 - 2TDSB2025
 
 Vídeo Demonstração: youtu.be/ERWwGtQpkZk
+
+Repositorio: https://github.com/FIAP-MOBILE/global-solution-jobfit-score
