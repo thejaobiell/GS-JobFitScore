@@ -11,6 +11,8 @@ Repositório: https://github.com/leomotalima/GS-JobFitScore-AdvancedBusiness
 Vídeo Demonstração: https://www.youtube.com/watch?v=UPBSy_l2NPQ
 
 
+* PARA MAIS INFORMAÇÕES DE COMO RODAR LOCALMENTE, LEIA O README.MD *
+
 
 URLs de Acesso ao Deploy
 
