@@ -6,4 +6,4 @@ Lucas Leal das Chagas - RM551124 - 2TDSB2025
 
 repositório: https://github.com/leomotalima/GS-JobFitScore-MasteringDatabase
 
-vídeo:
+vídeo: https://youtu.be/EkkzUF8Y0Cc
