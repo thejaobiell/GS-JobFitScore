@@ -7,3 +7,5 @@ Lucas Leal das Chagas - RM551124 - 2TDSB2025
 repositório: https://github.com/leomotalima/GS-JobFitScore-MasteringDatabase
 
 vídeo: https://youtu.be/EkkzUF8Y0Cc
+
+* OBS: Os arquivos .json são gerados da ultima procedure do código chamado(exportar_tabela_json), rode o código todo que os arquivos serão criados *
